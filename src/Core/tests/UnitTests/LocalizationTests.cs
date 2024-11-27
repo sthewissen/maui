@@ -221,7 +221,7 @@ namespace Microsoft.Maui.UnitTests
 						{
 							if (localized.TryGetProperty(property.Name, out JsonElement localizedProperty))
 							{
-								if (localizedProperty.GetRawText() == property.Value.GetRawText())
+								if (localizedProperty.GetRawText() == property.Value.GetRawText() && property.Name != "author")
 								{
 									sb.AppendLine($"    String not translated:");
 									sb.AppendLine($"        Name: {property.Name}");
