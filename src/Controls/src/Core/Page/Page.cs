@@ -942,7 +942,7 @@ namespace Microsoft.Maui.Controls
 #nullable enable
 		IDisposable? _handleNavigatedEventsForRootPage = null!;
 
-		internal void WireUpAsOutgoingPage(Page? newPage)
+		internal void WireUpAsOutgoingPage(Page? newPage, NavigationType navigationType)
 		{
 			_handleNavigatedEventsForRootPage?.Dispose();
 			_handleNavigatedEventsForRootPage = null;
@@ -959,7 +959,7 @@ namespace Microsoft.Maui.Controls
 					{
 						if (HasNavigatedTo)
 						{
-							SendNavigatedFrom(new NavigatedFromEventArgs(newPage));
+							SendNavigatedFrom(new NavigatedFromEventArgs(newPage, navigationType));
 						}
 
 						_handleNavigatedEventsForRootPage?.Dispose();
@@ -971,14 +971,14 @@ namespace Microsoft.Maui.Controls
 			{
 				if (HasNavigatedTo)
 				{
-					SendNavigatedFrom(new NavigatedFromEventArgs(newPage));
+					SendNavigatedFrom(new NavigatedFromEventArgs(newPage, navigationType));
 				}
 			}
 		}
 
 		internal void WireUpAsIncomingPage(Page? oldPage)
 		{
-			oldPage?.WireUpAsOutgoingPage(this);
+			oldPage?.WireUpAsOutgoingPage(this, NavigationType.PageSwap);
 			_handleNavigatedEventsForRootPage?.Dispose();
 			_handleNavigatedEventsForRootPage = null;
 
@@ -1026,7 +1026,7 @@ namespace Microsoft.Maui.Controls
 					if (sender is Page page && page.HasNavigatedTo)
 					{
 						(sender as Page)?.SendNavigatingFrom(new NavigatingFromEventArgs());
-						(sender as Page)?.SendNavigatedFrom(new NavigatedFromEventArgs(null));
+						(sender as Page)?.SendNavigatedFrom(new NavigatedFromEventArgs(null, NavigationType.PageSwap));
 					}
 
 					// If I'm still part of the root window that means I might come around again
