@@ -650,15 +650,6 @@ namespace Microsoft.Maui.Controls
 				newShell.PropertyChanged += ShellPropertyChanged;
 			}
 
-			if (oldPage?.IsLoaded == true)
-			{
-				this.OnUnloaded(() => oldPage.DisconnectHandlers());
-			}
-			else
-			{
-				oldPage?.DisconnectHandlers();
-			}
-
 			Handler?.UpdateValue(nameof(IWindow.FlowDirection));
 
 			newPage?.WireUpAsIncomingPage(oldPage);

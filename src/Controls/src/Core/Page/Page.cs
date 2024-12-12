@@ -942,7 +942,7 @@ namespace Microsoft.Maui.Controls
 #nullable enable
 		IDisposable? _handleNavigatedEventsForRootPage = null!;
 
-		internal void WireUpAsOutgoingPage(Page? newPage, NavigationType navigationType)
+		internal void WireUpAsOutgoingPage(Page? outgoingPage, NavigationType navigationType)
 		{
 			_handleNavigatedEventsForRootPage?.Dispose();
 			_handleNavigatedEventsForRootPage = null;
@@ -959,20 +959,23 @@ namespace Microsoft.Maui.Controls
 					{
 						if (HasNavigatedTo)
 						{
-							SendNavigatedFrom(new NavigatedFromEventArgs(newPage, navigationType));
-						}
+							SendNavigatedFrom(new NavigatedFromEventArgs(outgoingPage, navigationType));
+						}						
 
+						outgoingPage?.DisconnectHandlers();
 						_handleNavigatedEventsForRootPage?.Dispose();
 						_handleNavigatedEventsForRootPage = null;
-						newPage = null;
+						outgoingPage = null;
 					});
 			}
 			else
 			{
 				if (HasNavigatedTo)
 				{
-					SendNavigatedFrom(new NavigatedFromEventArgs(newPage, navigationType));
+					SendNavigatedFrom(new NavigatedFromEventArgs(outgoingPage, navigationType));
 				}
+				
+				outgoingPage?.DisconnectHandlers();
 			}
 		}
 
