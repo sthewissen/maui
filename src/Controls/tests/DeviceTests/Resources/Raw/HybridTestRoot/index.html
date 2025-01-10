@@ -14,13 +14,24 @@
 
                 window.HybridWebView.SendRawMessage('You said: ' + msg)
             });
+            
+        // test method invoke with simple parameters and simple return value
+        // test evaluate javascript to invoke
+        function EvaluateMeWithParamsAndVoidReturn(s1, s2) {
+            window.EvaluateMeWithParamsAndVoidReturnResult = `${s1}${s2}`;
+        }
+        function EvaluateMeWithParamsAndVoidReturnGetResult() {
+            var result = window.EvaluateMeWithParamsAndVoidReturnResult;
+            window.EvaluateMeWithParamsAndVoidReturnResult = undefined;
+            return result;
+        }
 
         // test method invoke with simple parameters and simple return value
         // test evaluate javascript to invoke
         function EvaluateMeWithParamsAndReturn(s1, s2) {
             return s1 + s2;
         }
-
+        
         // test method invoke with parameters, and returning complex type
         function AddNumbers(a, b) {
             var result = {
