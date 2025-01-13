@@ -149,6 +149,28 @@ namespace Microsoft.Maui.DeviceTests
 			});
 
 		[Fact]
+		public Task InvokeJavaScriptMethodWithParametersAndVoidReturnUsingObjectReturnMethod() =>
+			RunTest(async (hybridWebView) =>
+			{
+				var x = 123.456m;
+				var y = 654.321m;
+
+				var firstResult = await hybridWebView.InvokeJavaScriptAsync<ComputationResult>(
+					"EvaluateMeWithParamsAndVoidReturn",
+					HybridWebViewTestContext.Default.ComputationResult,
+					[x, y],
+					[HybridWebViewTestContext.Default.Decimal, HybridWebViewTestContext.Default.Decimal]);
+
+				Assert.Null(firstResult);
+
+				var result = await hybridWebView.InvokeJavaScriptAsync<decimal>(
+					"EvaluateMeWithParamsAndVoidReturnGetResult",
+					HybridWebViewTestContext.Default.Decimal);
+
+				Assert.Equal(777.777m, result);
+			});
+
+		[Fact]
 		public Task EvaluateJavaScriptAndGetResult() =>
 			RunTest(async (hybridWebView) =>
 			{
