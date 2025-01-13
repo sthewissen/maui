@@ -17,8 +17,8 @@
             
         // test method invoke with simple parameters and simple return value
         // test evaluate javascript to invoke
-        function EvaluateMeWithParamsAndVoidReturn(s1, s2) {
-            window.EvaluateMeWithParamsAndVoidReturnResult = `${s1}${s2}`;
+        function EvaluateMeWithParamsAndVoidReturn(a, b) {
+            window.EvaluateMeWithParamsAndVoidReturnResult = a + b;
         }
         function EvaluateMeWithParamsAndVoidReturnGetResult() {
             var result = window.EvaluateMeWithParamsAndVoidReturnResult;
